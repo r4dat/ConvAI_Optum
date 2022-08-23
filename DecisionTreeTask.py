@@ -40,7 +40,7 @@ print (cv_model.best_score_, cv_model.best_params_)
 final_predict = final_model.predict(test_x)
 print(confusion_matrix(test_y,final_predict))
 ConfusionMatrixDisplay.from_predictions(test_y,final_predict)
-#plt.show()
+plt.show()
 
-## Label 1 (Versicolor) has the most false-positives. 10 TP, 2 FP on the hold-out set. 
+## Label 2 (Virginica) has the most false-positives. 10 TP, 2 FP on the hold-out set. 
 ## I didn't expect the same confusion matrix after CV but we've made it all deterministic so it is what it is.
