@@ -2,9 +2,10 @@ from sklearn.datasets import load_iris
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from sklearn.metrics import plot_confusion_matrix
-from sklearn.metrics import confusion_matrix
-import matplotlib.pyplot as plt  
+from sklearn.metrics import ConfusionMatrixDisplay
+from sklearn.metrics import confusion_matrix 
+from sklearn.model_selection import GridSearchCV
+import matplotlib.pyplot as plt     
 
 data = load_iris()
 
@@ -26,8 +27,17 @@ print(predictions)
 score = accuracy_score(test_y,predictions)  
 print(f'Accuracy score is {score:3.3f}')
 print(confusion_matrix(test_y,predictions))
-plot_confusion_matrix(model,test_x,test_y)
-plt.show
-
+#plot_confusion_matrix(model,test_x,test_y)
+#plt.show
+    
 # Test depth options
 tree_depths = [1,5,10]
+parameters = {'max_depth' : tree_depths,'random_state' : [3]}
+cv_model = GridSearchCV(DecisionTreeClassifier(), parameters, n_jobs=5,scoring='accuracy')
+cv_model.fit(X=train_x, y=train_y)
+final_model = cv_model.best_estimator_
+print (cv_model.best_score_, cv_model.best_params_) 
+final_predict = final_model.predict(test_x)
+print(confusion_matrix(test_y,final_predict))
+ConfusionMatrixDisplay.from_predictions(test_y,final_predict)
+plt.show()
