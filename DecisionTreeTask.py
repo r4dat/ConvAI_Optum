@@ -29,3 +29,5 @@ print(confusion_matrix(test_y,predictions))
 plot_confusion_matrix(model,test_x,test_y)
 plt.show
 
+# Test depth options
+tree_depths = [1,5,10]
